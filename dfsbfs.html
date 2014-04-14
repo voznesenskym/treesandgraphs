@@ -1,0 +1,137 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<script>
+			var Node = function () {
+				var parent;
+				var children = [];
+				var value;
+
+				return {
+					addChild : function  (child) {
+						children.push(child);
+						child.setParent(this);
+					},
+					setParent : function (par){
+						parent = par;
+					},
+					getParent : function (){
+						return parent;
+					},
+					removeChild: function (child){
+						var findChild = children.indexOf(child);
+						children.splice(findChild,1);
+					},
+					getChild : function (index){
+						return children[index];
+					},
+					getNumberOfChildren : function (index){
+						return children.length;
+					},	
+					setValue : function (val){
+						value = val;
+					},
+					getValue : function (){
+						return value;
+					}
+
+				}
+			}
+
+
+			var root = new Node;
+			var one = new Node;
+			var two = new Node;
+			var three = new Node;
+			var four = new Node;
+			var five = new Node;
+			var six = new Node;
+			var seven = new Node;
+			var eight = new Node;
+			var nine = new Node;
+			var ten = new Node;
+			var eleven = new Node;
+			var twelve = new Node;
+			var thirteen = new Node;
+			var fourteen = new Node;
+			var fifteen = new Node;
+
+
+			root.addChild(one);
+			root.addChild(two);
+			one.addChild(three);
+			two.addChild(four);
+			two.addChild(five);
+			two.addChild(six);
+			three.addChild(seven);
+			seven.addChild(eight);
+			five.addChild(nine);
+			six.addChild(ten);
+			nine.addChild(eleven);
+			four.addChild(twelve);
+			ten.addChild(thirteen);
+			ten.addChild(fourteen);
+			eight.addChild(fifteen);
+
+			root.setValue(13);
+			one.setValue(8);
+			two.setValue(11);
+			three.setValue(1);
+			four.setValue(3);
+			five.setValue(9);
+			six.setValue(12);
+			seven.setValue(5);
+			eight.setValue(22);
+			nine.setValue(10);
+			ten.setValue(15);
+			eleven.setValue(0);
+			twelve.setValue(4);
+			thirteen.setValue(6);
+			fourteen.setValue(7);
+			fifteen.setValue(2);
+
+		//DEPTH FIRST
+		var stack = [];
+		function depthFirstTreeTraversal (node) {
+			if (node.getParent() === undefined){
+				stack.push(node.getValue());
+			}
+			if (node !== null || node !== undefined){
+				for (var i = 0; i < node.getNumberOfChildren(); i ++){
+					var child = node.getChild(i);
+					stack.push(child.getValue());
+					depthFirstTreeTraversal(child);
+				}
+			}
+			
+		}
+		//UNCOMMENT TO CALL
+		//depthFirstTreeTraversal(root);
+		//console.log(stack);
+
+		var bfsQueue = [];
+		var mappedNodes = [];
+		function breadthFirstTreeTraversal (node){
+			if (bfsQueue.length !== 0){
+				checkQueue();
+			}
+		}
+
+		function checkQueue(){
+			console.log('here');
+			var firstElement = bfsQueue.shift();
+			for (var j = 0; j < firstElement.getNumberOfChildren(); j++ ){
+				var ele = firstElement.getChild(j);
+				bfsQueue.push(ele);
+				mappedNodes.push(ele.getValue());
+			}
+			breadthFirstTreeTraversal();
+		}
+		//BREADTH FIRST UNCOMMENT TO CALL
+		//bfsQueue.push(root);
+		//breadthFirstTreeTraversal();
+		//console.log(mappedNodes);
+		</script>
+	</body>
+</html>
